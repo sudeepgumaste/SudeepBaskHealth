@@ -6,8 +6,9 @@ import ProvidersWrapper from "@/wrappers/providers";
 
 import Header from "@/components/templates/header";
 
-import { cn } from "@/utils/cn";
 import Container from "@/components/templates/content-container";
+
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 

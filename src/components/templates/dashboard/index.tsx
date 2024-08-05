@@ -6,17 +6,21 @@ import useGetLiveData from "@/queries/use-get-live-data";
 
 import GridCell from "@/components/molecules/grid-cell";
 
-import styles from "./styles.module.css";
-import { cn } from "@/utils/cn";
 import ResizeHandle from "@/components/atoms/resize-handle";
+import UserEngagement from "@/components/organisms/user-engagement";
+import SalesOverTime from "@/components/organisms/sales-over-time";
+
+import styles from "./styles.module.css";
+
+import { cn } from "@/utils/cn";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const _layout: Layout[] = [
-  { x: 0, y: 0, w: 3, h: 2, i: "1" },
-  { x: 0, y: 1, w: 3, h: 2, i: "2" },
-  { x: 0, y: 2, w: 3, h: 2, i: "3" },
-  { x: 0, y: 3, w: 3, h: 2, i: "4" },
+  { x: 0, y: 0, w: 4, h: 4, i: "1" },
+  { x: 5, y: 0, w: 2, h: 4, i: "2" },
+  { x: 0, y: 5, w: 3, h: 2, i: "3" },
+  { x: 5, y: 5, w: 3, h: 2, i: "4" }
 ];
 
 const Dashboard = () => {
@@ -62,8 +66,19 @@ const Dashboard = () => {
       >
         {layout.map((item, index) => (
           // rgl needs data-grid in the same file as the import to work
-          <div key={index} data-grid={item} className={cn(styles.reactGridItem, 'rounded-2xl | overflow-hidden | group/item')}>
-            <GridCell key={index} isDragging={item.i === draggedItemId}>{item.i}</GridCell>
+          <div key={index} data-grid={item} className={cn(styles.reactGridItem, 'rounded-2xl| group/item')}>
+            <GridCell title="Weekly user engagement" key={index} isDragging={item.i === draggedItemId}>
+              {
+                index === 0 ? data && (
+                  <SalesOverTime salesOverTime={data?.data.dashboardData.charts.salesOverTime} />
+                ): null
+              }
+              {
+                index === 1 ? data && (
+                  <UserEngagement userEngagement={data?.data.dashboardData.charts.userEngagement} />
+                ): null
+              }
+            </GridCell>
           </div>
         ))}
       </ResponsiveGridLayout>

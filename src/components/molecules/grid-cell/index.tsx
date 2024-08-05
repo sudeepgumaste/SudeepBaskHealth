@@ -1,24 +1,25 @@
-import { cn } from "@/utils/cn";
 import React from "react";
+
+import { cn } from "@/utils/cn";
 
 type Props = {
   children: React.ReactNode;
   isDragging?: boolean;
+  title: string;
 };
 
-const GridCell: React.FC<Props> = ({ children, isDragging }) => {
+const GridCell: React.FC<Props> = ({ children, isDragging, title }) => {
   return (
     <div
-      className={cn("border border-primary rounded-2xl | overflow-hidden | w-full h-full | relative | group",
-        "bg-layer-1", {['shadow-lg']: isDragging}
+      className={cn("border border-primary rounded-2xl | overflow-hidden | w-full h-full | relative | group | transition-all",
+        "bg-layer-1", {['shadow-lg | rotate-2 scale-[102%]']: isDragging},
+        'flex flex-col'
       )} 
     >
-      <div>{children}</div>
-      <div
-        className={cn("draggable | absolute bottom-2 left-1/2 -translate-x-1/2 | opacity-0 transition-opacity group-hover:opacity-100",
-          "w-6 h-1 | bg-foreground-secondary | rounded-full | cursor-grab", {['cursor-grabbing']: isDragging}
-        )}
-      ></div>
+      <p className="draggable | p-4 | border-b border-primary | font-semibold text-sm | bg-layer-2">{title}</p>
+      <div className="flex-1 | overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 };

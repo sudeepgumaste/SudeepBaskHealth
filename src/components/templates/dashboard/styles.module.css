@@ -7,7 +7,6 @@
 .reactGridLayout :global(.react-grid-item) {
   transition: all 200ms ease;
   transition-property: left, top;
-  text-align: center;
 }
 
 .reactGridLayout :global(.react-grid-item) span {

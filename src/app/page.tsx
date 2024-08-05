@@ -1,3 +1,4 @@
+import ChartTooltip from "@/components/molecules/chart-tooltip";
 import dynamic from "next/dynamic";
 
 const Dashboard = dynamic(() => import("@/components/templates/dashboard"), {
