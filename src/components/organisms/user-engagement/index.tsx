@@ -13,7 +13,7 @@ import { TChartData } from "@/types/common.types";
 
 import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
 
-import ChartTooltip from "@/components/molecules/chart-tooltip";
+import ChartTooltip from "@/components/atoms/chart-tooltip";
 
 type Props = {
   userEngagement: TChartData;

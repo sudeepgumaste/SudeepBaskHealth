@@ -16,6 +16,10 @@ const config: Config = {
         "primary-accent": "var(--primary-accent-color)",
         "foreground-primary": "var(--foreground-color-primary)",
         "foreground-secondary": "var(--foreground-color-secondary)",
+        "border-primary": "var(--border-primary)",
+        "border-secondary": "var(--border-secondary)",
+        "background-layer-1": "var(--background-layer-1)",
+        "background-layer-2": "var(--background-layer-2)",
       },
       textColor: {
         "primary": "var(--foreground-color-primary)",

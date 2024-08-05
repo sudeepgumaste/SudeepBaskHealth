@@ -10,23 +10,25 @@ import ResizeHandle from "@/components/atoms/resize-handle";
 import UserEngagement from "@/components/organisms/user-engagement";
 import SalesOverTime from "@/components/organisms/sales-over-time";
 
-import styles from "./styles.module.css";
-
 import { cn } from "@/utils/cn";
+
+import styles from "./styles.module.css";
+import RecentTransaction from "@/components/organisms/recent-tranaction";
+import TopProducts from "@/components/organisms/top-products";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const _layout: Layout[] = [
   { x: 0, y: 0, w: 4, h: 4, i: "1" },
   { x: 5, y: 0, w: 2, h: 4, i: "2" },
-  { x: 0, y: 5, w: 3, h: 2, i: "3" },
-  { x: 5, y: 5, w: 3, h: 2, i: "4" }
+  { x: 0, y: 5, w: 3, h: 4, i: "3" },
+  { x: 5, y: 5, w: 3, h: 4, i: "4" }
 ];
 
 const Dashboard = () => {
   const { data, isLoading, isError, error } = useGetLiveData({
     enabled: !false,
-    refetchInterval: Infinity,
+    refetchInterval: 5000,
   });
 
   const [layout, setLayout] = useState<Layout[]>(_layout);
@@ -76,6 +78,16 @@ const Dashboard = () => {
               {
                 index === 1 ? data && (
                   <UserEngagement userEngagement={data?.data.dashboardData.charts.userEngagement} />
+                ): null
+              }
+              {
+                index === 2 ? data && (
+                  <RecentTransaction transactions={data?.data.dashboardData.tables.recentTransactions} />
+                ): null
+              }
+              {
+                index === 3 ? data && (
+                  <TopProducts topProducts={data?.data.dashboardData.tables.topProducts} />
                 ): null
               }
             </GridCell>

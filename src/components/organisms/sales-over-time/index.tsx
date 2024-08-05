@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import ChartTooltip from "@/components/molecules/chart-tooltip";
+import ChartTooltip from "@/components/atoms/chart-tooltip";
 import dayjs from "dayjs";
 
 type Props = {
