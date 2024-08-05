@@ -14,10 +14,12 @@ const config: Config = {
       },
       colors: {
         "primary-accent": "var(--primary-accent-color)",
+        "foreground-primary": "var(--foreground-color-primary)",
+        "foreground-secondary": "var(--foreground-color-secondary)",
       },
       textColor: {
-        "primary": "var(--text-color-primary)",
-        "secondary": "var(--text-color-secondary)",
+        "primary": "var(--foreground-color-primary)",
+        "secondary": "var(--foreground-color-secondary)",
       },
       borderColor: {
         "primary": "var(--border-primary)",

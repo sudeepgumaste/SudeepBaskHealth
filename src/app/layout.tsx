@@ -46,7 +46,7 @@ export default function RootLayout({
                   </a>
                 </nav>
               </aside>
-              <section className="min-h-[calc(100vh-60px)] lg:px-6">
+              <section className="min-h-[calc(100vh-60px)] h-[calc(100vh-60px)] | overflow-y-auto | lg:px-6">
                 <Container className="py-6 lg:py-12">{children}</Container>
               </section>
             </main>
