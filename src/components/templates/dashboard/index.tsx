@@ -32,21 +32,20 @@ const Dashboard = () => {
   });
 
   const [layout, setLayout] = useState<Layout[]>(_layout);
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | undefined>(undefined);
   const [draggedItemId, setDraggedItemId] = useState<string | undefined>(undefined);
 
-  console.log({ layout });
+  console.log({ breakpoints: currentBreakpoint });
 
   return (
     <>
       <ResponsiveGridLayout
         cols={{
           lg: 6,
-          md: 6,
-          sm: 4,
-          xs: 2,
           xxs: 2,
         }}
-        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        // can add more breakpoints if needed
+        breakpoints={{ lg: 1200, xxs: 0 }}
         className={cn("w-full h-full | relative", styles.reactGridLayout)}
         isDraggable={true}
         isResizable={true}
@@ -65,6 +64,7 @@ const Dashboard = () => {
         useCSSTransforms={true}
         onDragStart={(_, item) => setDraggedItemId(item.i)}
         onDragStop={(id) => setDraggedItemId(undefined)}
+        onBreakpointChange={(breakpoint) => setCurrentBreakpoint(breakpoint)}
       >
         {layout.map((item, index) => (
           // rgl needs data-grid in the same file as the import to work

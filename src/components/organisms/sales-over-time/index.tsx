@@ -19,16 +19,15 @@ type Props = {
 };
 
 const SalesOverTime: React.FC<Props> = ({ salesOverTime }) => {
-  const mapData = useParseApiForCharts({
+  const mappedData = useParseApiForCharts({
     data: salesOverTime,
     labelName: "date",
   });
-  console.log({ mapData });
   return (
     <ResponsiveContainer width={"100%"} height={"100%"} className={"p-4"}>
       <AreaChart
         accessibilityLayer
-        data={mapData}
+        data={mappedData}
         margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
       >
         <CartesianGrid vertical={false} stroke="var(--border-primary)" />
