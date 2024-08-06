@@ -1,3 +1,5 @@
+import { Layout } from "react-grid-layout";
+
 export type TChartData = {
   labels: string[];
   data: number[];
@@ -22,3 +24,11 @@ export type TLocationData = {
   label: string;
   activity: number;
 }
+
+export type TBreakpoints = 'lg' | 'xxs'; 
+
+export type TBreakpointLayoutMap = Record<TBreakpoints, Layout[]>;
+
+export type TCellType = 'charts' | 'tables';
+
+export type TDataKey = 'salesOverTime' | 'userEngagement' | 'recentTransactions' | 'topProducts';

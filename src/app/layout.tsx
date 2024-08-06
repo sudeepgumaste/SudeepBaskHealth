@@ -8,7 +8,7 @@ import Header from "@/components/templates/header";
 
 import Container from "@/components/templates/content-container";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 const inter = Inter({ subsets: ["latin"] });
 

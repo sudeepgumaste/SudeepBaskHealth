@@ -1,29 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 
 import useGetLiveData from "@/queries/use-get-live-data";
 
 import GridCell from "@/components/molecules/grid-cell";
-
 import ResizeHandle from "@/components/atoms/resize-handle";
-import UserEngagement from "@/components/organisms/user-engagement";
-import SalesOverTime from "@/components/organisms/sales-over-time";
 
 import { cn } from "@/utils/cn";
 
+import {
+  TBreakpointLayoutMap,
+} from "@/types/common.types";
+
 import styles from "./styles.module.css";
-import RecentTransaction from "@/components/organisms/recent-tranaction";
-import TopProducts from "@/components/organisms/top-products";
+import useMediaQuery from "@/hooks/use-media-query";
+import {
+  defaultLayoutIdElementMapping,
+  starterLayout,
+} from "@/constants/default-layouts";
+import { getRenderElementInCell } from "@/utils/get-render-element-in-cell";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
-
-const _layout: Layout[] = [
-  { x: 0, y: 0, w: 4, h: 4, i: "1" },
-  { x: 5, y: 0, w: 2, h: 4, i: "2" },
-  { x: 0, y: 5, w: 3, h: 4, i: "3" },
-  { x: 5, y: 5, w: 3, h: 4, i: "4" }
-];
 
 const Dashboard = () => {
   const { data, isLoading, isError, error } = useGetLiveData({
@@ -31,11 +29,24 @@ const Dashboard = () => {
     refetchInterval: 5000,
   });
 
-  const [layout, setLayout] = useState<Layout[]>(_layout);
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | undefined>(undefined);
-  const [draggedItemId, setDraggedItemId] = useState<string | undefined>(undefined);
+  const [layout, setLayout] = useState<TBreakpointLayoutMap>(starterLayout);
+  const [draggedItemId, setDraggedItemId] = useState<string | undefined>(
+    undefined
+  );
 
-  console.log({ breakpoints: currentBreakpoint });
+  const currentBreakpoint = useMediaQuery("(min-width: 1281px)") ? "lg" : "xxs";
+  const handleLayoutChange = useCallback(
+    (layout: Layout[]) => {
+      if (!currentBreakpoint || layout.length === 0) return;
+      setTimeout(() => {
+        setLayout((prevLayout) => ({
+          ...prevLayout,
+          [currentBreakpoint]: layout,
+        }));
+      }, 100);
+    },
+    [currentBreakpoint]
+  );
 
   return (
     <>
@@ -45,54 +56,47 @@ const Dashboard = () => {
           xxs: 2,
         }}
         // can add more breakpoints if needed
-        breakpoints={{ lg: 1200, xxs: 0 }}
+        breakpoints={{ lg: 1000, xxs: 0 }}
         className={cn("w-full h-full | relative", styles.reactGridLayout)}
         isDraggable={true}
         isResizable={true}
         draggableHandle=".draggable"
         rowHeight={80}
-        onLayoutChange={(layout) => setLayout(layout)}
+        onLayoutChange={handleLayoutChange}
         resizeHandles={["se"]}
         resizeHandle={
           <div className="opacity-0 group-hover/item:opacity-100">
             <ResizeHandle />
-          </div> 
+          </div>
         }
         margin={[24, 24]}
-        containerPadding={[0,0]}
+        containerPadding={[0, 0]}
         compactType={"vertical"}
         useCSSTransforms={true}
         onDragStart={(_, item) => setDraggedItemId(item.i)}
-        onDragStop={(id) => setDraggedItemId(undefined)}
-        onBreakpointChange={(breakpoint) => setCurrentBreakpoint(breakpoint)}
+        onDragStop={() => setDraggedItemId(undefined)}
       >
-        {layout.map((item, index) => (
-          // rgl needs data-grid in the same file as the import to work
-          <div key={index} data-grid={item} className={cn(styles.reactGridItem, 'rounded-2xl| group/item')}>
-            <GridCell title="Weekly user engagement" key={index} isDragging={item.i === draggedItemId}>
-              {
-                index === 0 ? data && (
-                  <SalesOverTime salesOverTime={data?.data.dashboardData.charts.salesOverTime} />
-                ): null
-              }
-              {
-                index === 1 ? data && (
-                  <UserEngagement userEngagement={data?.data.dashboardData.charts.userEngagement} />
-                ): null
-              }
-              {
-                index === 2 ? data && (
-                  <RecentTransaction transactions={data?.data.dashboardData.tables.recentTransactions} />
-                ): null
-              }
-              {
-                index === 3 ? data && (
-                  <TopProducts topProducts={data?.data.dashboardData.tables.topProducts} />
-                ): null
-              }
-            </GridCell>
-          </div>
-        ))}
+        {layout[currentBreakpoint].map((item, index) => {
+          if (!data) return null;
+          const { type, dataKey } = defaultLayoutIdElementMapping[index];
+          const elementData = data.data.dashboardData[type][dataKey] || {};
+          return (
+            // rgl needs data-grid in the same file as the import to work
+            <div
+              id={item.i}
+              key={item.i}
+              data-grid={item}
+              className={cn(styles.reactGridItem, "rounded-2xl| group/item")}
+            >
+              <GridCell
+                title="Weekly user engagement"
+                isDragging={item.i === draggedItemId}
+              >
+                {getRenderElementInCell(dataKey, elementData)}
+              </GridCell>
+            </div>
+          );
+        })}
       </ResponsiveGridLayout>
     </>
   );
