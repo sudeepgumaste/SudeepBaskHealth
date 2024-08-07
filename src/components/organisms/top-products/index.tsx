@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TProductData } from '@/types/common.types'
-import { createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper, SortingState } from '@tanstack/react-table';
 import Table from '@/components/molecules/table';
 
 
@@ -26,10 +26,16 @@ type Props = {
 }
 
 const TopProducts:React.FC<Props> = ({topProducts}) => {
+  const [sorting, setSorting] = useState<SortingState>([]);
+
   return (
     <Table<TProductData>
       data={topProducts}
       columns={columns}
+      state={{
+        sorting,
+      }}
+      onSortingChange={setSorting}
     />
   )
 }

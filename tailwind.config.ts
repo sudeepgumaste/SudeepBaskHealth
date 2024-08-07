@@ -20,6 +20,7 @@ const config: Config = {
         "border-secondary": "var(--border-secondary)",
         "background-layer-1": "var(--background-layer-1)",
         "background-layer-2": "var(--background-layer-2)",
+        "subtle-accent": "var(--subtle-accent-color)",
       },
       textColor: {
         "primary": "var(--foreground-color-primary)",

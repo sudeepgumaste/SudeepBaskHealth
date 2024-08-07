@@ -3,7 +3,6 @@ import {
   TCellType,
   TDataKey,
 } from "@/types/common.types";
-import { Layout } from "react-grid-layout";
 
 export const starterLayout: TBreakpointLayoutMap = {
   lg: [
@@ -103,6 +102,7 @@ export const starterLayout: TBreakpointLayoutMap = {
 type LayoutElementMapping = {
   type: TCellType;
   dataKey: TDataKey;
+  title: string;
 };
 // index is the id ref in the layout array
 // explanation: 0th element data in Layout array will be housing
@@ -112,17 +112,21 @@ export const defaultLayoutIdElementMapping: LayoutElementMapping[] = [
   {
     type: "charts",
     dataKey: "salesOverTime",
+    title: "Sales over time",
   },
   {
     type: "charts",
     dataKey: "userEngagement",
+    title: "User engagement",
   },
   {
     type: "tables",
     dataKey: "recentTransactions",
+    title: "Recent transactions",
   },
   {
     type: "tables",
     dataKey: "topProducts",
+    title: "Top products",
   },
 ];

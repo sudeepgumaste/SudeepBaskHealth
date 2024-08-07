@@ -1,9 +1,11 @@
+import ThemeToggle from "@/components/molecules/theme-toggle";
 import React from "react";
 
 const Header = () => {
   return (
     <header className="flex items-center justify-between p-4 bg-primary-accent">
-      <h1 className="text-xl font-bold text-white">Live Data</h1>
+      <h1 className="text-xl font-bold text-white">BaskHealth</h1>
+      <ThemeToggle />
     </header>
   );
 };

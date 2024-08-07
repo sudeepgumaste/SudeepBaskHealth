@@ -1,18 +1,20 @@
-import React from "react";
-
-import { TChartData } from "@/types/common.types";
-import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
+import React, { useMemo } from "react";
+import dayjs from "dayjs";
 import {
   Area,
   AreaChart,
-  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+
 import ChartTooltip from "@/components/atoms/chart-tooltip";
-import dayjs from "dayjs";
+
+import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
+import {formatCurrency} from "@/utils/format-currency";
+
+import { TChartData } from "@/types/common.types";
 
 type Props = {
   salesOverTime: TChartData;
@@ -23,44 +25,83 @@ const SalesOverTime: React.FC<Props> = ({ salesOverTime }) => {
     data: salesOverTime,
     labelName: "date",
   });
+
+  const totalSales = useMemo(
+    () => formatCurrency(salesOverTime.data.reduce((acc, curr) => acc + curr, 0)),
+    [salesOverTime.data]
+  );
+
   return (
-    <ResponsiveContainer width={"100%"} height={"100%"} className={"p-4"}>
-      <AreaChart
-        accessibilityLayer
-        data={mappedData}
-        margin={{ top: 16, right: 16, bottom: 16, left: 16 }}
-      >
-        <CartesianGrid vertical={false} stroke="var(--border-primary)" />
-        <XAxis
-          dataKey="date"
-          tickLine={true}
-          tickCount={5}
-          tickFormatter={(value) => dayjs(value).format("MMM DD")}
-        />
-        <YAxis
-          dataKey="value"
-          tickLine={true}
-          tickCount={5}
-          tickFormatter={(value) => `$${value.toLocaleString()}`}
-        />
-        <Tooltip
-          content={
-            <ChartTooltip
-              afterLabel="Sales"
-              labelFormatter={(value, _) => dayjs(value).format("MMM DD YYYY")}
-            />
-          }
-          cursor={false}
-        />
-        <Area
-          dataKey="value"
-          fill="var(--primary-accent-color)"
-          stroke="var(--primary-accent-color)"
-          radius={8}
-          type={"monotone"}
-        />
-      </AreaChart>
-    </ResponsiveContainer>
+    <div className={"flex flex-col h-full | pb-4"}>
+      <div className="px-4 pt-3">
+        <p className="text-sm opacity-50">Total Sales</p>
+        <p className="text-2xl font-bold">{totalSales}</p>
+      </div>
+      <ResponsiveContainer width={"100%"} height={"80%"} className={"mt-auto"}>
+        <AreaChart accessibilityLayer data={mappedData} maxBarSize={220}>
+          <YAxis
+            domain={[0, 250]}
+            tickLine={false}
+            axisLine={false}
+            tickMargin={0}
+            hide={true}
+          />
+          <XAxis
+            dataKey="date"
+            tickLine={false}
+            axisLine={false}
+            minTickGap={8}
+            tickMargin={8}
+            tick={{
+              fontSize: 12,
+            }}
+            tickFormatter={(value, index) =>
+              index % 4 === 0 ? dayjs(value).format("MMM DD") : ""
+            }
+          />
+          <Tooltip
+            content={
+              <ChartTooltip
+                valueFormatter={(value) =>
+                  new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(value as number)
+                }
+                labelFormatter={(value, _) =>
+                  dayjs(value).format("MMM DD YYYY")
+                }
+              />
+            }
+            cursor={false}
+          />
+          <defs>
+            <linearGradient id="fillSalesOverTime" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor="var(--primary-accent-color)"
+                stopOpacity={1}
+              />
+              <stop
+                offset="95%"
+                stopColor="var(--primary-accent-color)"
+                stopOpacity={0}
+              />
+            </linearGradient>
+          </defs>
+          <Area
+            dataKey="value"
+            fill="url(#fillSalesOverTime)"
+            stroke="var(--primary-accent-color)"
+            strokeWidth={2}
+            radius={8}
+            type={"natural"}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

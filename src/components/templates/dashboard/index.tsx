@@ -9,17 +9,22 @@ import ResizeHandle from "@/components/atoms/resize-handle";
 
 import { cn } from "@/utils/cn";
 
-import {
-  TBreakpointLayoutMap,
-} from "@/types/common.types";
-
-import styles from "./styles.module.css";
 import useMediaQuery from "@/hooks/use-media-query";
+import useUpdateSavedLayout from "@/hooks/use-update-saved-layout";
+
 import {
   defaultLayoutIdElementMapping,
   starterLayout,
 } from "@/constants/default-layouts";
+
+import { TBreakpointLayoutMap } from "@/types/common.types";
+
 import { getRenderElementInCell } from "@/utils/get-render-element-in-cell";
+
+import useWidgetsToggleStore from "@/stores/widgets-toggle.store";
+
+import styles from "./styles.module.css";
+import { LS_KEYS } from "@/constants/ls-keys";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -29,12 +34,46 @@ const Dashboard = () => {
     refetchInterval: 5000,
   });
 
-  const [layout, setLayout] = useState<TBreakpointLayoutMap>(starterLayout);
+  const { recentTransactions, salesOverTime, topProducts, userEngagement } =
+    useWidgetsToggleStore();
+
+  const shouldShowWidget = useCallback((type: string) => {
+    switch (type) {
+      case "recentTransactions":
+        return recentTransactions;
+      case "salesOverTime":
+        return salesOverTime;
+      case "topProducts":
+        return topProducts;
+      case "userEngagement":
+        return userEngagement;
+      default:
+        return false;
+    }
+  },[recentTransactions, salesOverTime, topProducts, userEngagement])
+
+  const [layout, setLayout] = useState<TBreakpointLayoutMap>(() => {
+    const savedLayout = localStorage.getItem(LS_KEYS.LAYOUT);
+    if (savedLayout) {
+      try {
+        return JSON.parse(savedLayout);
+      } catch (e) {
+        console.error(e);
+        return starterLayout;
+      }
+    }
+    return starterLayout;
+  });
+
   const [draggedItemId, setDraggedItemId] = useState<string | undefined>(
     undefined
   );
 
+  // this is a fix to bypass the rgl bug where the update layout is called before breakpoint is set
+  // it's 1281px because rgl uses max-width and takes into account the container width rather than the viewport width
+  // lg breakpoint is 1000px + 80px (x-axis padding) + 200px sidebar
   const currentBreakpoint = useMediaQuery("(min-width: 1281px)") ? "lg" : "xxs";
+
   const handleLayoutChange = useCallback(
     (layout: Layout[]) => {
       if (!currentBreakpoint || layout.length === 0) return;
@@ -47,6 +86,8 @@ const Dashboard = () => {
     },
     [currentBreakpoint]
   );
+
+  useUpdateSavedLayout(layout);
 
   return (
     <>
@@ -65,7 +106,7 @@ const Dashboard = () => {
         onLayoutChange={handleLayoutChange}
         resizeHandles={["se"]}
         resizeHandle={
-          <div className="opacity-0 group-hover/item:opacity-100">
+          <div className="opacity-0 group-hover/item:opacity-100 | z-30 relative">
             <ResizeHandle />
           </div>
         }
@@ -78,7 +119,7 @@ const Dashboard = () => {
       >
         {layout[currentBreakpoint].map((item, index) => {
           if (!data) return null;
-          const { type, dataKey } = defaultLayoutIdElementMapping[index];
+          const { type, dataKey, title } = defaultLayoutIdElementMapping[index];
           const elementData = data.data.dashboardData[type][dataKey] || {};
           return (
             // rgl needs data-grid in the same file as the import to work
@@ -88,10 +129,7 @@ const Dashboard = () => {
               data-grid={item}
               className={cn(styles.reactGridItem, "rounded-2xl| group/item")}
             >
-              <GridCell
-                title="Weekly user engagement"
-                isDragging={item.i === draggedItemId}
-              >
+              <GridCell title={title} isDragging={item.i === draggedItemId}>
                 {getRenderElementInCell(dataKey, elementData)}
               </GridCell>
             </div>

@@ -4,6 +4,7 @@
 
 :root {
   --primary-accent-color: rgb(79, 68, 224);
+  --subtle-accent-color: rgb(212, 210, 242);
 
   --background-layer-1: rgb(255, 255, 255);
   --background-layer-2: rgb(246, 246, 246);
