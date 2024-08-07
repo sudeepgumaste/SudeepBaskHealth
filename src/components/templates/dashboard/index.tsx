@@ -25,6 +25,7 @@ import useWidgetsToggleStore from "@/stores/widgets-toggle.store";
 
 import styles from "./styles.module.css";
 import { LS_KEYS } from "@/constants/ls-keys";
+import useGridLayoutStore from "@/stores/grid-layout.store";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -52,18 +53,7 @@ const Dashboard = () => {
     }
   },[recentTransactions, salesOverTime, topProducts, userEngagement])
 
-  const [layout, setLayout] = useState<TBreakpointLayoutMap>(() => {
-    const savedLayout = localStorage.getItem(LS_KEYS.LAYOUT);
-    if (savedLayout) {
-      try {
-        return JSON.parse(savedLayout);
-      } catch (e) {
-        console.error(e);
-        return starterLayout;
-      }
-    }
-    return starterLayout;
-  });
+  const { layout, setLayout, setBreakpointLayout} = useGridLayoutStore();
 
   const [draggedItemId, setDraggedItemId] = useState<string | undefined>(
     undefined
@@ -78,13 +68,10 @@ const Dashboard = () => {
     (layout: Layout[]) => {
       if (!currentBreakpoint || layout.length === 0) return;
       setTimeout(() => {
-        setLayout((prevLayout) => ({
-          ...prevLayout,
-          [currentBreakpoint]: layout,
-        }));
+        setBreakpointLayout(layout, currentBreakpoint);
       }, 100);
     },
-    [currentBreakpoint]
+    [currentBreakpoint, setBreakpointLayout]
   );
 
   useUpdateSavedLayout(layout);
