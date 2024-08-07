@@ -27,8 +27,14 @@ export type TLocationData = {
 
 export type TBreakpoints = 'lg' | 'xxs'; 
 
-export type TBreakpointLayoutMap = Record<TBreakpoints, Layout[]>;
+export type TLayout = Layout & { i: TDataKey };
+
+export type TBreakpointLayoutMap = Record<TBreakpoints, TLayout[]>;
 
 export type TCellType = 'charts' | 'tables';
 
 export type TDataKey = 'salesOverTime' | 'userEngagement' | 'recentTransactions' | 'topProducts';
+
+export type TWidgetDefaultData = Record<TBreakpoints, TLayout>;
+
+export type TWidgetsToggle = Record<TDataKey, boolean>;

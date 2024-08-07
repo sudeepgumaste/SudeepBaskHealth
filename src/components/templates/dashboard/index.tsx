@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { use, useCallback, useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 
 import useGetLiveData from "@/queries/use-get-live-data";
@@ -10,11 +10,12 @@ import ResizeHandle from "@/components/atoms/resize-handle";
 import { cn } from "@/utils/cn";
 
 import useMediaQuery from "@/hooks/use-media-query";
-import useUpdateSavedLayout from "@/hooks/use-update-saved-layout";
+import useUpdateSavedLayout from "@/hooks/use-update-local-storage";
 
 import {
   defaultLayoutIdElementMapping,
   starterLayout,
+  widgetToTypeMapping,
 } from "@/constants/default-layouts";
 
 import { TBreakpointLayoutMap } from "@/types/common.types";
@@ -53,7 +54,7 @@ const Dashboard = () => {
     }
   },[recentTransactions, salesOverTime, topProducts, userEngagement])
 
-  const { layout, setLayout, setBreakpointLayout} = useGridLayoutStore();
+  const { layout, setBreakpointLayout} = useGridLayoutStore();
 
   const [draggedItemId, setDraggedItemId] = useState<string | undefined>(
     undefined
@@ -74,7 +75,7 @@ const Dashboard = () => {
     [currentBreakpoint, setBreakpointLayout]
   );
 
-  useUpdateSavedLayout(layout);
+  useUpdateSavedLayout(LS_KEYS.LAYOUT, layout);
 
   return (
     <>
@@ -106,17 +107,18 @@ const Dashboard = () => {
       >
         {layout[currentBreakpoint].map((item, index) => {
           if (!data) return null;
-          const { type, dataKey, title } = defaultLayoutIdElementMapping[index];
+          const dataKey = item.i;
+          const { type, title } = widgetToTypeMapping[dataKey];
           const elementData = data.data.dashboardData[type][dataKey] || {};
           return (
             // rgl needs data-grid in the same file as the import to work
             <div
-              id={item.i}
-              key={item.i}
+              id={dataKey}
+              key={dataKey}
               data-grid={item}
               className={cn(styles.reactGridItem, "rounded-2xl| group/item")}
             >
-              <GridCell title={title} isDragging={item.i === draggedItemId}>
+              <GridCell title={title} isDragging={dataKey === draggedItemId}>
                 {getRenderElementInCell(dataKey, elementData)}
               </GridCell>
             </div>

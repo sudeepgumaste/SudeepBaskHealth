@@ -1,14 +1,17 @@
 import { create } from "zustand";
 
 import { Layout } from "react-grid-layout";
-import { TBreakpointLayoutMap } from "@/types/common.types";
-import { starterLayout } from "@/constants/default-layouts";
+import { TBreakpointLayoutMap, TDataKey, TWidgetsToggle } from "@/types/common.types";
+import { starterLayout, starterWidgetsToggle, widgetDictionary } from "@/constants/default-layouts";
 import { LS_KEYS } from "@/constants/ls-keys";
 
+
 type TGridLayoutStore = {
+  widgetsToggle: TWidgetsToggle;
   layout: TBreakpointLayoutMap;
+  setWidgetsToggle: (elementType: TDataKey, toggle: boolean) => void;
   setLayout: (layout: TBreakpointLayoutMap) => void;
-  setBreakpointLayout: (layout: Layout[], breakPoint: 'lg' | 'xxs') => void;
+  setBreakpointLayout: (layout: Layout[], breakPoint: "lg" | "xxs") => void;
 };
 
 const initLayout = () => {
@@ -22,23 +25,73 @@ const initLayout = () => {
     }
   }
   return starterLayout;
+};
+
+const initWidgetsToggle = () => {
+  const savedToggles = localStorage.getItem(LS_KEYS.TOGGLES);
+  if (savedToggles) {
+    try {
+      return JSON.parse(savedToggles);
+    } catch (e) {
+      console.error(e);
+      return starterWidgetsToggle;
+    }
+  }
 }
 
+const removeWidgetsFromLayout = (
+  layout: TBreakpointLayoutMap,
+  widget: TDataKey[]
+) => {
+  const lgLayout = layout.lg.filter((item) => !widget.includes(item.i));
+  const xxsLayout = layout.xxs.filter((item) => !widget.includes(item.i));
+  return {
+    lg: lgLayout,
+    xxs: xxsLayout,
+  };
+};
+
+const addWidgetToLayout = (layout: TBreakpointLayoutMap, widget: TDataKey) => {
+  const lgWidgetData = widgetDictionary[widget].lg;
+  const xxsWidgetData = widgetDictionary[widget].xxs;
+  const lgLayout = layout.lg.concat(lgWidgetData);
+  const xxsLayout = layout.xxs.concat(xxsWidgetData);
+  return {
+    lg: lgLayout,
+    xxs: xxsLayout,
+  };
+};
+
 const useGridLayoutStore = create<TGridLayoutStore>()((set) => ({
+  widgetsToggle: initWidgetsToggle(),
   layout: initLayout(),
   setLayout: (layout: TBreakpointLayoutMap) => {
     set(() => ({
       layout,
     }));
   },
-  setBreakpointLayout: (layout: Layout[], breakPoint: 'lg' | 'xxs') => {
+  setBreakpointLayout: (layout: Layout[], breakPoint: "lg" | "xxs") => {
     set((prevState) => ({
       layout: {
         ...prevState.layout,
         [breakPoint]: layout,
       },
     }));
-  }
+  },
+  setWidgetsToggle: (elementType, toggle) => {
+    set((prevState) => {
+      const newLayout = toggle
+        ? addWidgetToLayout(prevState.layout, elementType)
+        : removeWidgetsFromLayout(prevState.layout, [elementType]);
+      return {
+        layout: newLayout,
+        widgetsToggle: {
+          ...prevState.widgetsToggle,
+          [elementType]: toggle,
+        },
+      };
+    });
+  },
 }));
 
 export default useGridLayoutStore;

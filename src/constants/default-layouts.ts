@@ -2,15 +2,17 @@ import {
   TBreakpointLayoutMap,
   TCellType,
   TDataKey,
+  TWidgetDefaultData,
+  TWidgetsToggle,
 } from "@/types/common.types";
 
-export const salesOverTime = {
+export const salesOverTime: TWidgetDefaultData = {
   lg: {
     x: 0,
     y: 0,
     w: 4,
     h: 4,
-    i: "charts | salesOverTime",
+    i: "salesOverTime",
     minW: 4,
     minH: 4,
     maxW: 6,
@@ -21,21 +23,21 @@ export const salesOverTime = {
     y: 0,
     w: 2,
     h: 4,
-    i: "charts | salesOverTime",
+    i: "salesOverTime",
     minW: 4,
     minH: 4,
     maxW: 6,
     maxH: 6,
   },
-}
+};
 
-export const userEngagement = {
+export const userEngagement: TWidgetDefaultData = {
   lg: {
-    x: 5,
+    x: 0,
     y: 0,
     w: 2,
     h: 4,
-    i: "charts | userEngagement",
+    i: "userEngagement",
     minW: 1,
     minH: 3,
     maxW: 3,
@@ -46,21 +48,21 @@ export const userEngagement = {
     y: 0,
     w: 2,
     h: 4,
-    i: "charts | userEngagement",
+    i: "userEngagement",
     minW: 1,
     minH: 3,
     maxW: 3,
     maxH: 6,
   },
-}
+};
 
-export const recentTransactions = {
+export const recentTransactions: TWidgetDefaultData = {
   lg: {
     x: 0,
-    y: 5,
+    y: 0,
     w: 3,
     h: 4,
-    i: "tables | recentTransactions",
+    i: "recentTransactions",
     minW: 2,
     minH: 3,
     maxW: 6,
@@ -71,21 +73,21 @@ export const recentTransactions = {
     y: 0,
     w: 2,
     h: 4,
-    i: "tables | recentTransactions",
+    i: "recentTransactions",
     minW: 2,
     minH: 3,
     maxW: 6,
     maxH: 8,
   },
-}
+};
 
-export const topProducts = {
+export const topProducts: TWidgetDefaultData = {
   lg: {
-    x: 5,
-    y: 5,
+    x: 0,
+    y: 0,
     w: 3,
     h: 4,
-    i: "tables | topProducts",
+    i: "topProducts",
     minW: 2,
     minH: 3,
     maxW: 6,
@@ -93,61 +95,69 @@ export const topProducts = {
   },
   xxs: {
     x: 0,
-    y: 12,
+    y: 0,
     w: 2,
     h: 4,
-    i: "tables | topProducts",
+    i: "topProducts",
     minW: 2,
     minH: 3,
     maxW: 6,
     maxH: 8,
   },
-}
+};
 
+export const widgetDictionary: Record<TDataKey, TWidgetDefaultData> = {
+  salesOverTime,
+  userEngagement,
+  recentTransactions,
+  topProducts,
+};
 
 export const starterLayout: TBreakpointLayoutMap = {
   lg: [
-    salesOverTime['lg'],
-    userEngagement['lg'],
-    recentTransactions['lg'],
-    topProducts['lg'],
+    salesOverTime["lg"],
+    userEngagement["lg"],
+    recentTransactions["lg"],
+    topProducts["lg"],
   ],
   xxs: [
-    salesOverTime['xxs'],
-    userEngagement['xxs'],
-    recentTransactions['xxs'],
-    topProducts['xxs'],
+    salesOverTime["xxs"],
+    userEngagement["xxs"],
+    recentTransactions["xxs"],
+    topProducts["xxs"],
   ],
+};
+
+export const starterWidgetsToggle: TWidgetsToggle = {
+  recentTransactions: true,
+  salesOverTime: true,
+  topProducts: true,
+  userEngagement: true,
 };
 
 type LayoutElementMapping = {
   type: TCellType;
-  dataKey: TDataKey;
   title: string;
 };
-// index is the id ref in the layout array
-// explanation: 0th element data in Layout array will be housing
-// 0th indexed dataPoint in the data array which would fetches data
-// from api response as dashboardData['charts']['salesOverTime']
-export const defaultLayoutIdElementMapping: LayoutElementMapping[] = [
-  {
+
+export const widgetToTypeMapping: Record<
+  TDataKey,
+  LayoutElementMapping
+> = {
+  salesOverTime: {
     type: "charts",
-    dataKey: "salesOverTime",
     title: "Sales over time",
   },
-  {
+  userEngagement: {
     type: "charts",
-    dataKey: "userEngagement",
     title: "User engagement",
   },
-  {
+  recentTransactions: {
     type: "tables",
-    dataKey: "recentTransactions",
     title: "Recent transactions",
   },
-  {
+  topProducts: {
     type: "tables",
-    dataKey: "topProducts",
     title: "Top products",
   },
-];
+};
