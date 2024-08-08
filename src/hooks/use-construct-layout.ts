@@ -17,21 +17,6 @@ const getLayoutFromLocalStorage = () => {
   return null;
 };
 
-const defaultLayout: TBreakpointLayoutMap = {
-  lg: [
-    { x: 0, y: 0, w: 4, h: 4, i: "1" },
-    { x: 5, y: 0, w: 2, h: 4, i: "2" },
-    { x: 0, y: 5, w: 3, h: 4, i: "3" },
-    { x: 5, y: 5, w: 3, h: 4, i: "4" },
-  ],
-  xxs: [
-    { x: 0, y: 0, w: 2, h: 4, i: "1" },
-    { x: 0, y: 5, w: 2, h: 4, i: "2" },
-    { x: 0, y: 10, w: 2, h: 4, i: "3" },
-    { x: 0, y: 15, w: 2, h: 4, i: "4" },
-  ],
-};
-
 const useConstructLayout = () => {
   const [layout, setLayout] = useState<TBreakpointLayoutMap>(getLayoutFromLocalStorage() || {});
 }
