@@ -45,7 +45,7 @@ const SalesOverTime: React.FC<Props> = ({ salesOverTime }) => {
       date: dayjs(_highestSale.date).format("MMM DD YYYY"),
       value: formatCurrency(_highestSale.value),
     };
-  }, [salesOverTime.data]);
+  }, [mappedData]);
 
   return (
     <div className={"flex flex-col h-full | pb-4"}>

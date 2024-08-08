@@ -56,7 +56,7 @@ const UserEngagement: React.FC<Props> = ({ userEngagement }) => {
       return prev + current;
     }, 0);
     return _totalUsers;
-  }, [mappedData]);
+  }, [userEngagement.data]);
 
   return (
     <div className="flex flex-col | h-full">
