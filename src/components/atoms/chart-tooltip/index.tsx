@@ -35,7 +35,7 @@ const ChartTooltip: React.FC<Props> = ({
           formattedLabel && <p className="font-semibold text-sm | mb-1">{formattedLabel}</p>
         }
         <p className="flex gap-1 items-center | h-5 overflow-hidden">
-          <span className="w-4 h-4 | !p-0 | block | bg-primary-500 rounded-[4px]" />
+          <span className={`w-4 h-4 | !p-0 | block | rounded-[4px]`} style={{backgroundColor: payload[0].payload.fill ?? "var(--primary-500)"}} />
           {formattedValue}&nbsp;
           {afterLabel}
         </p>

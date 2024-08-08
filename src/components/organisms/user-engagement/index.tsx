@@ -4,6 +4,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   Label,
   Pie,
   PieChart,
@@ -61,7 +62,10 @@ const UserEngagement: React.FC<Props> = ({ userEngagement }) => {
             onClick={() => setChartType("bar")}
             className={cn(
               "bg-layer-2 | p-2 | rounded-l-md | border border-r-0 border-primary",
-              { ["bg-primary-500 text-white border-primary-500"]: chartType === "bar" }
+              {
+                ["bg-primary-500 text-white border-primary-500"]:
+                  chartType === "bar",
+              }
             )}
           >
             <ChartBarIcon size={16} />
@@ -70,7 +74,10 @@ const UserEngagement: React.FC<Props> = ({ userEngagement }) => {
             onClick={() => setChartType("pie")}
             className={cn(
               "bg-layer-2 | p-2 | rounded-r-md | border border-l-0 border-primary",
-              { ["bg-primary-500 text-white border-primary-500"]: chartType === "pie" }
+              {
+                ["bg-primary-500 text-white border-primary-500"]:
+                  chartType === "pie",
+              }
             )}
           >
             <ChartPieIcon size={16} />
@@ -148,11 +155,7 @@ const EngagementPieChart: React.FC<ChartProps & { totalUsers: number }> = ({
   totalUsers,
 }) => {
   return (
-    <ResponsiveContainer
-      width={"100%"}
-      height={"80%"}
-      className={"p-4"}
-    >
+    <ResponsiveContainer width={"100%"} height={"80%"} className={"p-4"}>
       <PieChart data={mappedData}>
         <Pie
           data={mappedData}
@@ -162,7 +165,14 @@ const EngagementPieChart: React.FC<ChartProps & { totalUsers: number }> = ({
           innerRadius={60}
           fill="var(--primary-500)"
           stroke={"var(--background-layer-1)"}
+          activeIndex={2}
         >
+          {mappedData.map((_, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={`var(--primary-${(index+1)%5}00)`}
+            />
+          ))}
           <Label
             content={({ viewBox }) => {
               if (viewBox && "cx" in viewBox && "cy" in viewBox) {
