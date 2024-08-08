@@ -1,58 +1,35 @@
 "use client";
-import React, { use, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
-
-import useGetLiveData from "@/queries/use-get-live-data";
 
 import GridCell from "@/components/molecules/grid-cell";
 import ResizeHandle from "@/components/atoms/resize-handle";
 
-import { cn } from "@/utils/cn";
+import useGridLayoutStore from "@/stores/grid-layout.store";
 
 import useMediaQuery from "@/hooks/use-media-query";
 import useUpdateSavedLayout from "@/hooks/use-update-local-storage";
 
+import useGetLiveData from "@/queries/use-get-live-data";
+
 import {
-  defaultLayoutIdElementMapping,
-  starterLayout,
   widgetToTypeMapping,
 } from "@/constants/default-layouts";
 
-import { TBreakpointLayoutMap } from "@/types/common.types";
-
+import { cn } from "@/utils/cn";
 import { getRenderElementInCell } from "@/utils/get-render-element-in-cell";
 
-import useWidgetsToggleStore from "@/stores/widgets-toggle.store";
+import { LS_KEYS } from "@/constants/ls-keys";
 
 import styles from "./styles.module.css";
-import { LS_KEYS } from "@/constants/ls-keys";
-import useGridLayoutStore from "@/stores/grid-layout.store";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Dashboard = () => {
   const { data, isLoading, isError, error } = useGetLiveData({
     enabled: !false,
-    refetchInterval: 5000,
+    refetchInterval: Infinity,
   });
-
-  const { recentTransactions, salesOverTime, topProducts, userEngagement } =
-    useWidgetsToggleStore();
-
-  const shouldShowWidget = useCallback((type: string) => {
-    switch (type) {
-      case "recentTransactions":
-        return recentTransactions;
-      case "salesOverTime":
-        return salesOverTime;
-      case "topProducts":
-        return topProducts;
-      case "userEngagement":
-        return userEngagement;
-      default:
-        return false;
-    }
-  },[recentTransactions, salesOverTime, topProducts, userEngagement])
 
   const { layout, setBreakpointLayout} = useGridLayoutStore();
 

@@ -12,7 +12,7 @@ import {
 import ChartTooltip from "@/components/atoms/chart-tooltip";
 
 import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
-import {formatCurrency} from "@/utils/format-currency";
+import { formatCurrency } from "@/utils/format-currency";
 
 import { TChartData } from "@/types/common.types";
 
@@ -27,15 +27,36 @@ const SalesOverTime: React.FC<Props> = ({ salesOverTime }) => {
   });
 
   const totalSales = useMemo(
-    () => formatCurrency(salesOverTime.data.reduce((acc, curr) => acc + curr, 0)),
+    () =>
+      formatCurrency(salesOverTime.data.reduce((acc, curr) => acc + curr, 0)),
     [salesOverTime.data]
   );
+  const highestSale = useMemo(() => {
+    const _highestSale = mappedData.reduce(
+      (acc, curr) => {
+        if (acc.value < curr.value) {
+          return curr;
+        }
+        return acc;
+      },
+      { value: 0 }
+    );
+    return {
+      date: dayjs(_highestSale.date).format("MMM DD YYYY"),
+      value: formatCurrency(_highestSale.value),
+    };
+  }, [salesOverTime.data]);
 
   return (
     <div className={"flex flex-col h-full | pb-4"}>
-      <div className="px-4 pt-3">
-        <p className="text-sm opacity-50">Total Sales</p>
-        <p className="text-2xl font-bold">{totalSales}</p>
+      <div className="flex pt-3">
+        <div className="px-4">
+          <p className="text-sm opacity-50">Total Sales</p>
+          <p className="text-2xl font-bold">{totalSales}</p>
+        </div>
+        <p className="text-xs lg:text-sm text-right | max-w-[200px] lg:max-w-[unset] | ml-auto px-4 | opacity-50">
+          Your highest sales were on {highestSale.date} valued at {highestSale.value}
+        </p>
       </div>
       <ResponsiveContainer width={"100%"} height={"80%"} className={"mt-auto"}>
         <AreaChart accessibilityLayer data={mappedData} maxBarSize={220}>

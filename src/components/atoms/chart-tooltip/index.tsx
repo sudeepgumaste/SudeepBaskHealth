@@ -20,17 +20,20 @@ const ChartTooltip: React.FC<Props> = ({
   labelFormatter,
 }) => {
   if (active && payload && payload.length) {
-    const formattedLabel = labelFormatter
+    const formattedLabel = (labelFormatter
       ? labelFormatter(label, payload)
-      : label;
+      : label) || payload?.[0].name;
 
-    const formattedValue = valueFormatter
+    let formattedValue = valueFormatter
       ? valueFormatter(payload[0]?.value as string | number)
       : payload?.[0].value;
+    
       
     return (
       <div className="bg-layer-2 | border border-primary | rounded-md p-3 text-xs | shadow-md | text-left">
-        <p className="font-semibold text-sm | mb-1">{formattedLabel}</p>
+        {
+          formattedLabel && <p className="font-semibold text-sm | mb-1">{formattedLabel}</p>
+        }
         <p className="flex gap-1 items-center | h-5 overflow-hidden">
           <span className="w-4 h-4 | !p-0 | block | bg-primary-accent rounded-[4px]" />
           {formattedValue}&nbsp;

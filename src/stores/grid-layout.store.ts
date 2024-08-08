@@ -1,10 +1,17 @@
 import { create } from "zustand";
 
 import { Layout } from "react-grid-layout";
-import { TBreakpointLayoutMap, TDataKey, TWidgetsToggle } from "@/types/common.types";
-import { starterLayout, starterWidgetsToggle, widgetDictionary } from "@/constants/default-layouts";
+import {
+  TBreakpointLayoutMap,
+  TDataKey,
+  TWidgetsToggle,
+} from "@/types/common.types";
+import {
+  starterLayout,
+  starterWidgetsToggle,
+  widgetDictionary,
+} from "@/constants/default-layouts";
 import { LS_KEYS } from "@/constants/ls-keys";
-
 
 type TGridLayoutStore = {
   widgetsToggle: TWidgetsToggle;
@@ -13,31 +20,6 @@ type TGridLayoutStore = {
   setLayout: (layout: TBreakpointLayoutMap) => void;
   setBreakpointLayout: (layout: Layout[], breakPoint: "lg" | "xxs") => void;
 };
-
-const initLayout = () => {
-  const savedLayout = localStorage.getItem(LS_KEYS.LAYOUT);
-  if (savedLayout) {
-    try {
-      return JSON.parse(savedLayout);
-    } catch (e) {
-      console.error(e);
-      return starterLayout;
-    }
-  }
-  return starterLayout;
-};
-
-const initWidgetsToggle = () => {
-  const savedToggles = localStorage.getItem(LS_KEYS.TOGGLES);
-  if (savedToggles) {
-    try {
-      return JSON.parse(savedToggles);
-    } catch (e) {
-      console.error(e);
-      return starterWidgetsToggle;
-    }
-  }
-}
 
 const removeWidgetsFromLayout = (
   layout: TBreakpointLayoutMap,
@@ -60,6 +42,33 @@ const addWidgetToLayout = (layout: TBreakpointLayoutMap, widget: TDataKey) => {
     lg: lgLayout,
     xxs: xxsLayout,
   };
+};
+
+const initLayout = () => {
+  if (typeof window === 'undefined') return starterLayout;
+  const savedLayout = localStorage.getItem(LS_KEYS.LAYOUT);
+  if (savedLayout) {
+    try {
+      return JSON.parse(savedLayout);
+    } catch (e) {
+      console.error(e);
+      return starterLayout;
+    }
+  }
+  return starterLayout;
+};
+
+const initWidgetsToggle = () => {
+  if (typeof window === 'undefined') return starterWidgetsToggle;
+  const savedToggles = localStorage.getItem(LS_KEYS.TOGGLES);
+  if (savedToggles) {
+    try {
+      return JSON.parse(savedToggles);
+    } catch (e) {
+      console.error(e);
+      return starterWidgetsToggle;
+    }
+  }
 };
 
 const useGridLayoutStore = create<TGridLayoutStore>()((set) => ({
