@@ -26,9 +26,10 @@ import styles from "./styles.module.css";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Dashboard = () => {
+  // todo: add a loading state
   const { data, isLoading, isError, error } = useGetLiveData({
     enabled: !false,
-    refetchInterval: Infinity,
+    refetchInterval: 5000,
   });
 
   const { layout, setBreakpointLayout} = useGridLayoutStore();
