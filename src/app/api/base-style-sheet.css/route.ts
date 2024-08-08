@@ -1,5 +1,7 @@
 import generateMaterialPalette from "@/utils/generate-material-palette";
 
+export const revalidate = 0;
+
 export function GET(request: Request) {
   const baseColors = [
     { h: 36, s: 100, l: 50 },
