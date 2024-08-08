@@ -25,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="stylesheet" href="/assets/base-styles/3.css" />
+      </head>
       <body className={inter.className}>
         <ProvidersWrapper>
           <>

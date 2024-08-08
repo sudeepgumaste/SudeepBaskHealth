@@ -69,6 +69,7 @@ const initWidgetsToggle = () => {
       return starterWidgetsToggle;
     }
   }
+  return starterWidgetsToggle;
 };
 
 const useGridLayoutStore = create<TGridLayoutStore>()((set) => ({

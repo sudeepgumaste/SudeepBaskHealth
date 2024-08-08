@@ -1,0 +1,32 @@
+:root {
+  --primary-500: rgb(245, 201, 0);
+  --primary-400: rgb(244, 209, 38);
+  --primary-300: rgb(245, 220, 79);
+  --primary-200: rgb(247, 229, 132);
+  --primary-100: rgb(252, 240, 181);
+
+  --background-layer-1: rgb(255, 255, 255);
+  --background-layer-2: rgb(246, 246, 246);
+
+  --foreground-color-primary: rgb(42,42,47);
+  --foreground-color-secondary: rgb(143, 143, 145);
+
+  --border-primary: rgb(233, 233, 233);
+  --border-secondary: rgb(143, 143, 145);
+
+  --interactive-element-bg: rgb(184, 184, 184);
+  --interactive-element-fg: rgb(238, 238, 238);
+
+  &.dark {
+    --background-layer-1: rgb(31, 32, 35);
+    --background-layer-2: rgb(40, 41, 44);
+
+    --foreground-color-primary: rgb(246, 246, 246);
+    --foreground-color-secondary: rgb(136, 137, 138);
+
+    --border-primary: rgb(58,59,61);
+    --border-secondary: rgb(136, 137, 138);
+
+    --interactive-element-bg: rgb(90, 90, 90);
+  }
+}

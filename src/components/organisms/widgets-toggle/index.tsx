@@ -28,7 +28,6 @@ const WIDGETS: {key: TDataKey, label: string}[] = [
 
 const WidgetsToggle = () => {
   const { widgetsToggle, setWidgetsToggle } = useGridLayoutStore();
-
   useUpdateLocalStorage(LS_KEYS.TOGGLES, widgetsToggle);
   
   return (

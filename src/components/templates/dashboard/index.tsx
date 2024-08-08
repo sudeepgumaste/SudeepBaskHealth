@@ -54,6 +54,11 @@ const Dashboard = () => {
 
   useUpdateSavedLayout(LS_KEYS.LAYOUT, layout);
 
+  console.log({
+    layout,
+    currentBreakpoint,
+  })
+
   return (
     <>
       <ResponsiveGridLayout

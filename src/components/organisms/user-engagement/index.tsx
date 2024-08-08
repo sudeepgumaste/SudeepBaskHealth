@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { use, useMemo, useState } from "react";
 
 import {
   Bar,
@@ -21,13 +21,20 @@ import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
 import ChartTooltip from "@/components/atoms/chart-tooltip";
 import { ChartBarIcon, ChartPie, ChartPieIcon } from "lucide-react";
 import { cn } from "@/utils/cn";
+import useUpdateLocalStorage from "@/hooks/use-update-local-storage";
+import { LS_KEYS } from "@/constants/ls-keys";
 
 type Props = {
   userEngagement: TChartData;
 };
 
 const UserEngagement: React.FC<Props> = ({ userEngagement }) => {
-  const [chartType, setChartType] = useState<"bar" | "pie">("bar");
+  const [chartType, setChartType] = useState<"bar" | "pie">(() => {
+    const _chartType = localStorage.getItem(LS_KEYS.PREFERS_CHART) as "bar" | "pie";
+    return _chartType ?? "bar";
+  });
+
+  useUpdateLocalStorage(LS_KEYS.PREFERS_CHART, chartType);
 
   const mappedData = useParseApiForCharts({
     data: userEngagement,

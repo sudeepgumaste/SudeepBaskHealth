@@ -2,8 +2,6 @@ import { TApiError, TApiResponse, TLiveData } from "@/types/api.types";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 const getLiveData = async (): Promise<TApiResponse<TLiveData>> => {
-  const url = new URL(`${process.env.NEXT_PUBLIC_BACKEND_URL as string}/api/get`);
-
   const requestOptions = {
     method: "GET",
     headers: {
@@ -13,7 +11,7 @@ const getLiveData = async (): Promise<TApiResponse<TLiveData>> => {
     cache: "no-cache" as RequestCache,
   };
 
-  const response = await fetch('/api/get', requestOptions);
+  const response = await fetch('/proxy-api/get', requestOptions);
 
   const data = await response.json();
 
