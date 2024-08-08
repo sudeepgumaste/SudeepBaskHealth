@@ -24,9 +24,9 @@ const Switch: React.FC<Props> = ({
         name={name}
         checked={checked}
         onCheckedChange={onCheckedChange}
-        className="inline-flex shrink-0 | h-5 w-[36px] | cursor-pointer items-center rounded-full | shadow-sm | transition-colors | data-[state=checked]:bg-primary-accent data-[state=unchecked]:bg-subtle-accent"
+        className="inline-flex shrink-0 | h-5 w-[36px] | cursor-pointer items-center rounded-full | shadow-sm | transition-colors | data-[state=checked]:bg-primary-500 data-[state=unchecked]:bg-interactive-element-bg"
       >
-        <RadixSwitch.Thumb className="pointer-events-none | block h-[18px] w-[18px] | rounded-full | bg-layer-1 shadow-lg transition-transform | data-[state=checked]:translate-x-[17px] data-[state=unchecked]:translate-x-[1px]" />
+        <RadixSwitch.Thumb className="pointer-events-none | block h-[18px] w-[18px] | rounded-full | bg-interactive-element-fg shadow-lg transition-transform | data-[state=checked]:translate-x-[17px] data-[state=unchecked]:translate-x-[1px]" />
       </RadixSwitch.Root>
       {label && (
         <label

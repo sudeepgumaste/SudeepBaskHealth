@@ -7,8 +7,6 @@ const ThemeToggle = () => {
   const prefersDarkTheme = useMediaQuery("(prefers-color-scheme: dark)");
   const [isDarkTheme, setIsDarkTheme] = React.useState(true);
 
-  console.log(prefersDarkTheme)
-
   useEffect(() => {
     setTimeout(() => {
       setIsDarkTheme(prefersDarkTheme);

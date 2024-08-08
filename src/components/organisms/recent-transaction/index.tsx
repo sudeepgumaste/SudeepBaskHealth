@@ -1,22 +1,18 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import {
   createColumnHelper,
   SortingFn,
-  SortingState,
 } from "@tanstack/react-table";
 import dayjs from "dayjs";
 
 import Table from "@/components/molecules/table";
 
 import { TTransactionData } from "@/types/common.types";
+import { formatCurrency } from "@/utils/format-currency";
 
 const columnHelper = createColumnHelper<TTransactionData>();
 
 const sortByAmount: SortingFn<TTransactionData> = (a, b) => {
-  console.log({
-    a: a.original.amount,
-    b: b.original.amount,
-  })
   const amountA = Number(a.original.amount.slice(1));
   const amountB = Number(b.original.amount.slice(1));
   return amountA - amountB;
@@ -48,12 +44,22 @@ type Props = {
 };
 
 const RecentTransaction: React.FC<Props> = ({ transactions }) => {
+  const totalValue = useMemo(
+    () =>
+      formatCurrency(transactions.reduce((acc, curr) => acc + Number(curr.amount.slice(1)), 0)),
+    [transactions]
+  );
 
   return (
     <Table<TTransactionData>
       data={transactions}
       columns={columns}
       enableSorting={true}
+      subText={
+        <p className="text-xs opacity-40 | absolute bottom-2 left-8 right-0 | z-10">
+          Total transaction value: {totalValue}
+        </p>
+      }
     />
   );
 };

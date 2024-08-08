@@ -102,12 +102,12 @@ const SalesOverTime: React.FC<Props> = ({ salesOverTime }) => {
             <linearGradient id="fillSalesOverTime" x1="0" y1="0" x2="0" y2="1">
               <stop
                 offset="5%"
-                stopColor="var(--primary-accent-color)"
+                stopColor="var(--primary-500)"
                 stopOpacity={1}
               />
               <stop
                 offset="95%"
-                stopColor="var(--primary-accent-color)"
+                stopColor="var(--primary-500)"
                 stopOpacity={0}
               />
             </linearGradient>
@@ -115,7 +115,7 @@ const SalesOverTime: React.FC<Props> = ({ salesOverTime }) => {
           <Area
             dataKey="value"
             fill="url(#fillSalesOverTime)"
-            stroke="var(--primary-accent-color)"
+            stroke="var(--primary-500)"
             strokeWidth={2}
             radius={8}
             type={"natural"}

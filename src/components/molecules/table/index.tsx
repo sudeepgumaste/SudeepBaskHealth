@@ -11,9 +11,11 @@ import { cn } from "@/utils/cn";
 import { ArrowDownNarrowWide, ArrowUpNarrowWide } from "lucide-react";
 import { motion } from "framer-motion";
 
-type Props<TData> = Omit<TableOptions<TData>, "getCoreRowModel">;
+type Props<TData> = Omit<TableOptions<TData>, "getCoreRowModel"> & {
+  subText?: React.ReactNode;
+};
 
-const Table = <TData,>(tableOptions: Props<TData>) => {
+const Table = <TData,>({ subText, ...tableOptions }: Props<TData>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable<TData>({
@@ -29,7 +31,7 @@ const Table = <TData,>(tableOptions: Props<TData>) => {
 
   return (
     <div className="relative h-full">
-      <div className="px-8 pb-6 h-full | overflow-y-auto | bg-layer-1">
+      <div className="px-8 pb-11 h-full | overflow-y-auto | bg-layer-1">
         <table className="border-collapse table-auto | w-full h-full |overflow-y-auto | text-sm | text-left">
           <thead
             className={cn(
@@ -99,10 +101,12 @@ const Table = <TData,>(tableOptions: Props<TData>) => {
       {/* mask for when there is overflow and scroll appears. For user indication that there is more data */}
       <div
         className={cn(
-          "absolute bottom-0 left-0 right-0 h-10 | z-10  | pointer-events-none |",
-          "bg-gradient-to-t from-background-layer-1 from-20% to-[rgba(0,0,0,0)]"
+          "absolute bottom-0 left-0 right-0 h-24 | z-10  | pointer-events-none |",
+          "bg-gradient-to-t from-background-layer-1 from-20% to-[rgba(0,0,0,0)] to-70%"
         )}
-      ></div>
+      >
+        {subText}
+      </div>
     </div>
   );
 };

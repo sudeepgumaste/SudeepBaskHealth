@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { TProductData } from '@/types/common.types'
 import { createColumnHelper, SortingState } from '@tanstack/react-table';
 import Table from '@/components/molecules/table';
@@ -28,6 +28,12 @@ type Props = {
 const TopProducts:React.FC<Props> = ({topProducts}) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
+  const totalSales = useMemo(
+    () =>
+      topProducts.reduce((acc, curr) => acc + Number(curr.sales), 0),
+    [topProducts]
+  );
+
   return (
     <Table<TProductData>
       data={topProducts}
@@ -36,6 +42,11 @@ const TopProducts:React.FC<Props> = ({topProducts}) => {
         sorting,
       }}
       onSortingChange={setSorting}
+      subText={
+        <p className="text-xs opacity-40 | absolute bottom-2 left-8 right-0 | z-10">
+          Total sales: {totalSales}
+        </p>
+      }
     />
   )
 }

@@ -23,7 +23,7 @@
 }
 
 .reactGridLayout :global(.react-grid-item):global(.react-grid-placeholder) {
-  background: var(--primary-accent-color);
+  background: var(--primary-500);
   opacity: 0.05;
   transition-duration: 100ms;
   z-index: 2;

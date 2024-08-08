@@ -13,7 +13,7 @@ const config: Config = {
         "layer-2": "var(--background-layer-2)",
       },
       colors: {
-        "primary-accent": "var(--primary-accent-color)",
+        "primary-500": "var(--primary-500)",
         "foreground-primary": "var(--foreground-color-primary)",
         "foreground-secondary": "var(--foreground-color-secondary)",
         "border-primary": "var(--border-primary)",
@@ -21,6 +21,8 @@ const config: Config = {
         "background-layer-1": "var(--background-layer-1)",
         "background-layer-2": "var(--background-layer-2)",
         "subtle-accent": "var(--subtle-accent-color)",
+        "interactive-element-bg": "var(--interactive-element-bg)",
+        "interactive-element-fg": "var(--interactive-element-fg)",
       },
       textColor: {
         "primary": "var(--foreground-color-primary)",

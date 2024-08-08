@@ -61,7 +61,7 @@ const UserEngagement: React.FC<Props> = ({ userEngagement }) => {
             onClick={() => setChartType("bar")}
             className={cn(
               "bg-layer-2 | p-2 | rounded-l-md | border border-r-0 border-primary",
-              { ["bg-primary-accent text-white border-primary-accent"]: chartType === "bar" }
+              { ["bg-primary-500 text-white border-primary-500"]: chartType === "bar" }
             )}
           >
             <ChartBarIcon size={16} />
@@ -70,7 +70,7 @@ const UserEngagement: React.FC<Props> = ({ userEngagement }) => {
             onClick={() => setChartType("pie")}
             className={cn(
               "bg-layer-2 | p-2 | rounded-r-md | border border-l-0 border-primary",
-              { ["bg-primary-accent text-white border-primary-accent"]: chartType === "pie" }
+              { ["bg-primary-500 text-white border-primary-500"]: chartType === "pie" }
             )}
           >
             <ChartPieIcon size={16} />
@@ -111,7 +111,6 @@ const EngagementBarChart: React.FC<ChartProps> = ({ mappedData }) => {
       <BarChart accessibilityLayer data={mappedData}>
         <CartesianGrid vertical={false} stroke="var(--border-primary" />
         <YAxis
-          domain={[0, 600]}
           hide={true}
           tickLine={false}
           axisLine={false}
@@ -133,9 +132,9 @@ const EngagementBarChart: React.FC<ChartProps> = ({ mappedData }) => {
         <Tooltip content={<ChartTooltip afterLabel="Users" />} cursor={false} />
         <Bar
           dataKey="value"
-          fill="var(--primary-accent-color)"
+          fill="var(--primary-500)"
           fillOpacity={0.8}
-          activeBar={{ fill: "var(--primary-accent-color)", fillOpacity: 1 }}
+          activeBar={{ fill: "var(--primary-500)", fillOpacity: 1 }}
           radius={[8, 8, 0, 0]}
           barSize={44}
         />
@@ -161,7 +160,7 @@ const EngagementPieChart: React.FC<ChartProps & { totalUsers: number }> = ({
           nameKey="week"
           outerRadius={110}
           innerRadius={60}
-          fill="var(--primary-accent-color)"
+          fill="var(--primary-500)"
           stroke={"var(--background-layer-1)"}
         >
           <Label
