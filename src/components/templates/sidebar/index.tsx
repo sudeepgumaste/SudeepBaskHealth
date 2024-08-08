@@ -1,4 +1,6 @@
+"use client";
 import WidgetsToggle from "@/components/organisms/widgets-toggle";
+import { useGlobalStore } from "@/stores/global-store";
 import { cn } from "@/utils/cn";
 import {
   Box,
@@ -23,8 +25,14 @@ const LINKS = [
 ];
 
 const Sidebar = () => {
+  const { sideBarShown } = useGlobalStore();
+
   return (
-    <aside className="hidden lg:flex flex-col | border-r border-primary | bg-layer-2">
+    <aside
+      className={
+        `fixed w-full h-[calc(100vh-60px)] transition-transform translate-x-[-100%] ${sideBarShown? 'translate-x-0': ''} | z-50 || lg:translate-x-0 lg:w-[200px] | lg:static flex flex-col | border-r border-primary | bg-layer-2`
+      }
+    >
       <nav className="flex flex-col gap-4 px-4 py-10">
         {LINKS.map((link) => (
           <Link

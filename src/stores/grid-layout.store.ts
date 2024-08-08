@@ -17,6 +17,7 @@ type TGridLayoutStore = {
   widgetsToggle: TWidgetsToggle;
   layout: TBreakpointLayoutMap;
   setWidgetsToggle: (elementType: TDataKey, toggle: boolean) => void;
+  initWidgetsToggle: (toggles: TWidgetsToggle) => void;
   setLayout: (layout: TBreakpointLayoutMap) => void;
   setBreakpointLayout: (layout: Layout[], breakPoint: "lg" | "xxs") => void;
 };
@@ -58,22 +59,9 @@ const initLayout = () => {
   return starterLayout;
 };
 
-const initWidgetsToggle = () => {
-  if (typeof window === 'undefined') return starterWidgetsToggle;
-  const savedToggles = localStorage.getItem(LS_KEYS.TOGGLES);
-  if (savedToggles) {
-    try {
-      return JSON.parse(savedToggles);
-    } catch (e) {
-      console.error(e);
-      return starterWidgetsToggle;
-    }
-  }
-  return starterWidgetsToggle;
-};
 
 const useGridLayoutStore = create<TGridLayoutStore>()((set) => ({
-  widgetsToggle: initWidgetsToggle(),
+  widgetsToggle: starterWidgetsToggle,
   layout: initLayout(),
   setLayout: (layout: TBreakpointLayoutMap) => {
     set(() => ({
@@ -86,6 +74,11 @@ const useGridLayoutStore = create<TGridLayoutStore>()((set) => ({
         ...prevState.layout,
         [breakPoint]: layout,
       },
+    }));
+  },
+  initWidgetsToggle: (toggles) => {
+    set(() => ({
+      widgetsToggle: toggles,
     }));
   },
   setWidgetsToggle: (elementType, toggle) => {
