@@ -1,4 +1,6 @@
 import React from "react";
+import { useMediaQuery } from "usehooks-ts";
+import { GripVertical } from "lucide-react";
 
 import { cn } from "@/utils/cn";
 
@@ -9,6 +11,7 @@ type Props = {
 };
 
 const GridCell: React.FC<Props> = ({ children, isDragging, title }) => {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
   return (
     <div
       className={cn(
@@ -20,13 +23,21 @@ const GridCell: React.FC<Props> = ({ children, isDragging, title }) => {
     >
       <p
         className={cn(
-          "draggable | p-4 | border-b border-primary | font-semibold text-sm | bg-layer-2 | cursor-grab",
+          "p-4 | border-b border-primary | font-semibold text-sm | bg-layer-2 | cursor-grab | flex items-center justify-between",
           {
-            ['cursor-grabbing']: isDragging,
+            ["cursor-grabbing"]: isDragging,
+            ["draggable"]: isDesktop,
           }
         )}
       >
         {title}
+        <span
+          className={cn("lg:hidden inline-flex px-2 py-1", {
+            ["draggable"]: !isDesktop,
+          })}
+        >
+          <GripVertical size={16} className="opacity-50" />
+        </span>
       </p>
       <div className="flex-1 | overflow-hidden">{children}</div>
     </div>
