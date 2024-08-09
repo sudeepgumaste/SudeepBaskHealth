@@ -1,0 +1,19 @@
+/* the nature of how tailwind styles are compiled resulted in the transition not working
+had to use style instead. The non active transition-x-0 does not get added to the compiled css
+because initially the state is false and the tailwind doesn't see the class name */
+
+.sidebar {
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+
+  &.active {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    transform: translateX(0);
+  }
+}

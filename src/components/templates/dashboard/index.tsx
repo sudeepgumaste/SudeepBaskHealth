@@ -55,6 +55,8 @@ const Dashboard = () => {
 
   useUpdateSavedLayout(LS_KEYS.LAYOUT, layout);
 
+  if(isLoading) return <div className="h-full w-full flex items-center justify-center">Loading...</div>;
+
   return (
     <>
       <ResponsiveGridLayout

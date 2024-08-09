@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import { MenuIcon } from "lucide-react";
 
@@ -11,7 +11,12 @@ const Header = () => {
 
   return (
     <header className="flex items-center justify-between p-4 bg-primary-500">
-      <button className="text-white lg:hidden" onClick={toggleSidebar}>
+      <button
+        className="text-white lg:hidden"
+        onClick={() => {
+          toggleSidebar();
+        }}
+      >
         <MenuIcon size={24} className="mr-2" />
       </button>
       <h1 className="text-xl font-bold text-white | mr-auto">BaskHealth</h1>

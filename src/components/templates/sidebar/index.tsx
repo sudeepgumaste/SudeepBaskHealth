@@ -12,6 +12,8 @@ import {
 import Link from "next/link";
 import React from "react";
 
+import styles from "./styles.module.css";
+
 const LINKS = [
   {
     name: "Dashboard",
@@ -30,7 +32,10 @@ const Sidebar = () => {
   return (
     <aside
       className={
-        `fixed w-full h-[calc(100vh-60px)] transition-transform translate-x-[-100%] ${sideBarShown? 'translate-x-0': ''} | z-50 || lg:translate-x-0 lg:w-[200px] | lg:static flex flex-col | border-r border-primary | bg-layer-2`
+        // bug in twMerge. It gives precedence to fixed in spite of lg:static class
+        `${styles.sidebar} ${
+          sideBarShown ? styles.active : ""
+        } fixed w-full h-[calc(100vh-60px)] | z-50 || lg:w-[200px] | lg:static flex flex-col | border-r border-primary | bg-layer-2`
       }
     >
       <nav className="flex flex-col gap-4 px-4 py-10">

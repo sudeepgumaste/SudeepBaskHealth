@@ -13,15 +13,17 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ChartBarIcon,  ChartPieIcon } from "lucide-react";
 
 import { TChartData } from "@/types/common.types";
 
-import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
-
 import ChartTooltip from "@/components/atoms/chart-tooltip";
-import { ChartBarIcon, ChartPie, ChartPieIcon } from "lucide-react";
-import { cn } from "@/utils/cn";
+
+import useParseApiForCharts from "@/hooks/use-parse-api-for-charts";
 import useUpdateLocalStorage from "@/hooks/use-update-local-storage";
+
+import { cn } from "@/utils/cn";
+
 import { LS_KEYS } from "@/constants/ls-keys";
 
 type Props = {

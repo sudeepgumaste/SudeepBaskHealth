@@ -9,9 +9,5 @@ interface IGlobalStore {
 export const useGlobalStore = create<IGlobalStore>((set) => ({
   sideBarShown: false,
   setSidebarShown: (value) => set({ sideBarShown: value }),
-  toggleSidebar: () =>
-    set((prevState) => ({
-      ...prevState,
-      sideBarShown: !prevState.sideBarShown,
-    })),
+  toggleSidebar: () => set((state) => ({ sideBarShown: !state.sideBarShown })),
 }));
