@@ -36,8 +36,47 @@ The dashboard implemented is highly customizable.
 
 ![Data sorting](./screenshots/data-rearrange-animation.png)
 
+## Design and Architectural Decisions 
+The dashboard is built using Next.js 14, leveraging the new app directory feature. To enhance the initial load time, the dashboard component is lazy-loaded. This component is wrapped in a Suspense component to display a loading state while data is being fetched. I opted for client-side rendering for the dashboard since it requires real-time data fetching. Streaming HTML for the widgets wouldn’t be ideal due to their dynamic nature.
 
-## Directory Structure
+> If there are any magic numbers used in the codebase, they have been appropriately explained with the comment right above them.
+
+### Choice of important libraries
+- <b>typescript</b> for type safety
+  The project features extensive use of typescript for a type-safe codebase. I've created custom types(with some generics). Type definitions can be found in the `src/types` directory.
+
+- <b>@tanstack/react-query</b> for data fetching
+  It's a lightweight and flexible data fetching library that provides a simple and intuitive API for fetching data. It also does refetch on window focus provided the data is marked stale that can be controlled with cache time. I've used refetch time to refetch the data from the API every 5 seconds. If an api call fails (5% chance of failure is hit), it automatically retries the request therefore providing a great error handling experience.
+
+- <b>react-grid-layout</b> for layout management
+  It's a powerful and flexible layout management library that allows users to create complex and responsive layouts with ease. I have set up two breakpoints but can add more if needed.
+
+- <b>zustand</b> for state management
+  It's a simple and powerful state management library that provides a simple and intuitive API for managing state. I've used it to manage the layout state and the widget visibility state.
+
+- <b>tailwindcss</b> for styling
+  It's a utility-first CSS framework that provides a set of utility classes for styling common UI components. The common complaint with tailwind is that it leads to absurdly long and affects DX. TO counter this I've used `|` to separate out the class names based on what aspect of a component they are targeting. I've also combined it with tailwind-merge to avoid conflicts.
+
+- <b>framer-motion</b> for animations
+  It's a powerful and flexible animation library that provides easy to use components for creating animations. I've used it to animate the table rows rearranging on sort.
+
+- <b>recharts</b> for charts
+  It's a powerful and flexible charting library that provides a wide range of chart types and customization options. I've customized the charts to make them more visually appealing and easier to read.
+
+- <b>@tanstack/react-table</b> for table
+  It's a headless table library that provides a great level of customization and I prefer having control over the styles. I've used it to create a Table component with sorting functionality.
+
+- <b>dayjs</b> for date formatting
+  It's a super lightweight and flexible date formatting library. 
+
+- <b>radix primitives</b> for custom components
+  It's a set of primitives that provide a set of low-level building blocks for building custom components. I've picked for the accessibility layer it provides with the primitives and like I stated earlier, I like to have control over the styles.
+
+- <b>lucide-react</b> for icons
+  It's a set of icons that are designed to be accessible.
+
+
+### Directory Structure
 The directory structure is thoughtfully organized to facilitate easy navigation and maintain a well-structured codebase, contributing to a smooth developer experience and minimizing confusion. The code structure adheres to atomic design  for better component organization and reusability.
 
 - `src/app` - layout, pages and api routes
@@ -50,7 +89,6 @@ The directory structure is thoughtfully organized to facilitate easy navigation 
 - `src/utils` - This directory contains the utility functions used in the project.
 - `src/wrappers` - This directory contains provider wrappers for the project. Currently, it only has the `QueryClientProvider` wrapper.
 
-## Design and Architectural Decisions 
 
 
 ## Setup Instructions
