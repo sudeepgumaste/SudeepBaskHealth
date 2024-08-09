@@ -19,14 +19,21 @@ import { getRenderElementInCell } from "@/utils/get-render-element-in-cell";
 
 import { LS_KEYS } from "@/constants/ls-keys";
 
+import { TApiResponse, TLiveData } from "@/types/api.types";
+
 import styles from "./styles.module.css";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Dashboard = () => {
+type Props = {
+  data: TApiResponse<TLiveData>;
+};
+
+const Dashboard:React.FC<Props> = (props) => {
   const { data, isLoading, isError } = useGetLiveData({
     enabled: !false,
     refetchInterval: 5000,
+    initialData: props.data,
   });
 
   const { layout, setBreakpointLayout } = useGridLayoutStore();
