@@ -20,6 +20,8 @@ Checkout the live demo by visiting [Live Demo](https://sudeep-bask-health.vercel
 
 [Watch the video](https://www.youtube.com/watch?v=f_f3OJvQU0Y)
 
+> I have made a minor change after the video was made. I am now fetching the data on both server and client side. Server side api response is sent to the dashboard component and it's used as initial data for the react query hook.
+
 ## Dashboard customization an interactivity
 The dashboard implemented is highly customizable. 
 - The user has a choice to toggle the visibility of the widgets with toggles provided on the sidebar. 
@@ -50,7 +52,7 @@ The dashboard implemented is highly customizable.
 ![Data sorting](./screenshots/data-rearrange-animation.png)
 
 ## Design and Architectural Decisions 
-The dashboard is built using Next.js 14, leveraging the new app directory feature. To enhance the initial load time, the dashboard component is lazy-loaded. This component is wrapped in a Suspense component to display a loading state while data is being fetched. I opted for client-side rendering for the dashboard since it requires real-time data fetching. Streaming HTML for the widgets wouldn’t be ideal due to their dynamic nature.
+The dashboard is built using Next.js 14, leveraging the new app directory feature. To enhance the initial load time, the dashboard component is lazy-loaded. This component is wrapped in a Suspense component to display a loading state while data is being fetched. I opted for client-side rendering for the dashboard since it requires real-time data fetching. Streaming HTML for the widgets wouldn’t be ideal due to their dynamic nature. Although a server side request has been added to Home page and the data is passed on to the client side and used as initial data for the react query hook.
 
 > If there are any magic numbers used in the codebase, they have been appropriately explained with the comment right above them.
 
