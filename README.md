@@ -43,33 +43,43 @@ The dashboard is built using Next.js 14, leveraging the new app directory featur
 
 ### Choice of important libraries
 - <b>typescript</b> for type safety
+
   The project features extensive use of typescript for a type-safe codebase. I've created custom types(with some generics). Type definitions can be found in the `src/types` directory.
 
 - <b>@tanstack/react-query</b> for data fetching
+
   It's a lightweight and flexible data fetching library that provides a simple and intuitive API for fetching data. It also does refetch on window focus provided the data is marked stale that can be controlled with cache time. I've used refetch time to refetch the data from the API every 5 seconds. If an api call fails (5% chance of failure is hit), it automatically retries the request therefore providing a great error handling experience.
 
 - <b>react-grid-layout</b> for layout management
+
   It's a powerful and flexible layout management library that allows users to create complex and responsive layouts with ease. I have set up two breakpoints but can add more if needed.
 
 - <b>zustand</b> for state management
+
   It's a simple and powerful state management library that provides a simple and intuitive API for managing state. I've used it to manage the layout state and the widget visibility state.
 
 - <b>tailwindcss</b> for styling
+
   It's a utility-first CSS framework that provides a set of utility classes for styling common UI components. The common complaint with tailwind is that it leads to absurdly long and affects DX. TO counter this I've used `|` to separate out the class names based on what aspect of a component they are targeting. I've also combined it with tailwind-merge to avoid conflicts.
 
 - <b>framer-motion</b> for animations
+
   It's a powerful and flexible animation library that provides easy to use components for creating animations. I've used it to animate the table rows rearranging on sort.
 
 - <b>recharts</b> for charts
+
   It's a powerful and flexible charting library that provides a wide range of chart types and customization options. I've customized the charts to make them more visually appealing and easier to read.
 
 - <b>@tanstack/react-table</b> for table
+
   It's a headless table library that provides a great level of customization and I prefer having control over the styles. I've used it to create a Table component with sorting functionality.
 
 - <b>dayjs</b> for date formatting
+
   It's a super lightweight and flexible date formatting library. 
 
 - <b>radix primitives</b> for custom components
+
   It's a set of primitives that provide a set of low-level building blocks for building custom components. I've picked for the accessibility layer it provides with the primitives and like I stated earlier, I like to have control over the styles.
 
 - <b>lucide-react</b> for icons
@@ -113,6 +123,11 @@ The project features a layout that serves as a container for the dashboard and t
 ### Error handling
 As stated before since the project uses `@tanstack/react-query` for data fetching, the api errors are handled gracefully by reattempting the request on failure. In case all the reattempts fail(5 retries by default), I've added a toast notification to notify the user that something went wrong with the request.
 
+### Data memoization
+Wherever there's calculations needed to be run on the api data, I've used `useMemo` to memoize the data. This ensures that the calculations are only run once and the result is cached for future use.
+
+### Saved User Preferences
+The project features a localStorage to store the user preferences. I've written a custom hook to write data to localStorage. This hook debounces user actions for 500ms to avoid unnecessary writes to localStorage. Since the state is stored in localStorage, the user is greeted with their preferred setting on refresh/next visit.
 
 ## Setup Instructions
 
