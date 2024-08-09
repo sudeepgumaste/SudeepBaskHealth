@@ -12,9 +12,7 @@ import useUpdateSavedLayout from "@/hooks/use-update-local-storage";
 
 import useGetLiveData from "@/queries/use-get-live-data";
 
-import {
-  widgetToTypeMapping,
-} from "@/constants/default-layouts";
+import { widgetToTypeMapping } from "@/constants/default-layouts";
 
 import { cn } from "@/utils/cn";
 import { getRenderElementInCell } from "@/utils/get-render-element-in-cell";
@@ -27,12 +25,12 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Dashboard = () => {
   // todo: add a loading state
-  const { data, isLoading, isError, error } = useGetLiveData({
+  const { data, isLoading, isError } = useGetLiveData({
     enabled: !false,
     refetchInterval: 5000,
   });
 
-  const { layout, setBreakpointLayout} = useGridLayoutStore();
+  const { layout, setBreakpointLayout } = useGridLayoutStore();
 
   const [draggedItemId, setDraggedItemId] = useState<string | undefined>(
     undefined
@@ -55,10 +53,29 @@ const Dashboard = () => {
 
   useUpdateSavedLayout(LS_KEYS.LAYOUT, layout);
 
-  if(isLoading) return <div className="h-full w-full flex items-center justify-center">Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="h-full w-full flex items-center justify-center">
+        Loading...
+      </div>
+    );
 
   return (
     <>
+      {isError && (
+        <>
+          <p
+            className={cn(
+              "fixed top-9 left-1/2 -translate-x-1/2 | bg-red-500 px-4 py-2 | text-white text-sm | rounded-lg",
+              styles.errorMessage
+            )}
+          >
+            We ran into issue fetching data. Please wait while we retry or
+            reload the page.
+          </p>
+        </>
+      )}
+
       <ResponsiveGridLayout
         cols={{
           lg: 6,
