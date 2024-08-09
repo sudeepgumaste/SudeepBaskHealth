@@ -3,7 +3,7 @@
 BaskHealth Live Data Dashboard is a web application developed for the BaskHealth hiring challenge. This features a highly customizable dashboard that fetches data from the provided API every 5 seconds and displays it in a visually appealing manner. It also includes a random styles generator that uses custom material design color palette to generate a random color scheme for the dashboard.
 
 ## Table of Contents
-- [Live Demo](#live-demo)
+- [Live Demo and Video Walkthrough](#live-demo-and-video-walkthrough)
 - [Dashboard customization an interactivity](#dashboard-customization-an-interactivity)
 - [Design and Architectural Decisions](#design-and-architectural-decisions)
   - [Directory Structure](#directory-structure)
@@ -15,8 +15,10 @@ BaskHealth Live Data Dashboard is a web application developed for the BaskHealth
   - [Saved User Preferences](#saved-user-preferences)
 - [Setup Instructions](#setup-instructions)
 
-## Live Demo
+## Live Demo and Video Walkthrough
 Checkout the live demo by visiting [Live Demo](https://sudeep-bask-health.vercel.app/)
+
+[Watch the video](https://www.youtube.com/watch?v=f_f3OJvQU0Y)
 
 ## Dashboard customization an interactivity
 The dashboard implemented is highly customizable. 
