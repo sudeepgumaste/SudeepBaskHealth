@@ -24,7 +24,6 @@ import styles from "./styles.module.css";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Dashboard = () => {
-  // todo: add a loading state
   const { data, isLoading, isError } = useGetLiveData({
     enabled: !false,
     refetchInterval: 5000,
