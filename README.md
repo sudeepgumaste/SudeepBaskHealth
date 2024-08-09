@@ -7,15 +7,51 @@ BaskHealth Live Data Dashboard is a web application developed for the BaskHealth
 ## Live Demo
 Checkout the live demo by visiting [Live Demo](https://sudeep-bask-health.vercel.app/)
 
-## Dashboard customization
-The dashboard implemented is highly customizable. The user has a choice to toggle the visibility of the widgets with toggles provided on the sidebar. The user can drag around and resize the widgets using the widget header on desktops and a drag handle that shows up at right side of the header, as per their preference based on what data points they deem as important. Users also have an option to pick between dark and light mode. Please refer the demo video for a visual explanation.
+## Dashboard customization an interactivity
+The dashboard implemented is highly customizable. 
+- The user has a choice to toggle the visibility of the widgets with toggles provided on the sidebar. 
 
-![widget moving]('./screenshots/widget-move.png')
+![toggle](./screenshots/toggled-off.png)
+
+- The user can drag around by  the widgets using the widget header on desktops and a drag handle that shows up at right side of the header as per their preference based on what data points they deem as important.
+
+
+![widget moving](./screenshots/widget-move.png)
+
+- The user can resize with the help of resize handle at the bottom right of every widget. 
+
+![widget resize](./screenshots/widget-resize.png)
+
+- The user has an option to pick between dark and light mode.
+
+![dark mode](./screenshots/dark-mode.png)
+![light mode](./screenshots/light-mode.png)
+
+- The user can switch between the chart types for User Engagement widget by clicking on the chart type selector.
+
+![chart type selector](./screenshots/user-engagement-1.png)
+![chart type selector](./screenshots/user-engagement-2.png)
+
+- The user can sort the tabular data by clicking on the column headers. The data rows smoothly animate and rearrange themselves within the table The live data coming in results in a smoothly animated rearrangement of table rows. If sort is turned on, the rows rearrange to reflect the live data every ping.
+
+![Data sorting](./screenshots/data-rearrange-animation.png)
+
 
 ## Directory Structure
+The directory structure is thoughtfully organized to facilitate easy navigation and maintain a well-structured codebase, contributing to a smooth developer experience and minimizing confusion. The code structure adheres to atomic design  for better component organization and reusability.
+
 - `src/app` - layout, pages and api routes
 - `src/components/` - Contains all the components used in the project. The components are further subdivided into different categories based on [atomic design methodology](https://atomicdesign.bradfrost.com/chapter-2/).
-- 
+- `src/constants` - Contains all the constants used in the project. Like widgets, their default configurations and localStorage keys 
+- `src/hooks` - Contains all the custom hooks used in the project.
+- `src/queries` - This project uses `@tanstack/react-query` for data fetching. This directory contains the api queries used in the project.
+- `src/stores` - This project uses `zustand` for state management. This directory contains the state stores used in the project.
+- `src/types` This directory contains the user defined types. Throught the project, the types that have been exported are prefixed with `T`.
+- `src/utils` - This directory contains the utility functions used in the project.
+- `src/wrappers` - This directory contains provider wrappers for the project. Currently, it only has the `QueryClientProvider` wrapper.
+
+## Design and Architectural Decisions 
+
 
 ## Setup Instructions
 
