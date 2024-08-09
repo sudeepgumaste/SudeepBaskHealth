@@ -35,7 +35,7 @@ const columns = [
   }),
   columnHelper.accessor("date", {
     header: "Date",
-    cell: (info) => dayjs(info.getValue()).format("MM/DD/YYYY"),
+    cell: (info) => dayjs(info.getValue()).format("MMM DD YYYY"),
   }),
 ];
 
