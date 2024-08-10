@@ -179,3 +179,10 @@ pnpm run dev
   ```bash
   pnpm run start
   ```
+
+## Possible Improvements
+- Add test cases with at least 90% coverage
+- Add a web vitals reporter to measure the performance of the application
+- Since the styles are generated via an api, there can be a UI to let user choose the primary color that generates the palette.
+- I was hoping to add charts to the tablular data as well but couldn't finish it in time.
+![Intended Charts](./screenshots/intended-design.png)
