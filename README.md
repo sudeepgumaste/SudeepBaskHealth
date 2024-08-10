@@ -18,7 +18,7 @@ BaskHealth Live Data Dashboard is a web application developed for the BaskHealth
 ## Live Demo and Video Walkthrough
 Checkout the live demo by visiting [Live Demo](https://sudeep-bask-health.vercel.app/)
 
-[Watch the video](https://www.youtube.com/watch?v=f_f3OJvQU0Y)
+[Watch the video](https://youtu.be/m0Rc-pdGI2c?si=Xh4enCpz7b8uH_t1)
 
 > I have made a minor change after the video was made. I am now fetching the data on both server and client side. Server side api response is sent to the dashboard component and it's used as initial data for the react query hook. Also included error handling(error.tsx) and loading state(loading.tsx) while the page content is streamed.
 
